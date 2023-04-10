@@ -4,9 +4,10 @@ This library makes it easy to add authentication features to your web app with r
 
 ## Getting started
 
-*Note*: Before using this library, it is necessary to have an Appwrite server instance up and running. The Appwrite server can be set up locally or on a remote server. To set up an Appwrite server, you can follow the instructions provided in the official Appwrite [documentation](https://appwrite.io/docs/getting-started-for-web). Without a running Appwrite server, the library will not be able to connect to the Appwrite API and you will not be able to use any of its functionality.
+_Note_: Before using this library, it is necessary to have an Appwrite server instance up and running. The Appwrite server can be set up locally or on a remote server. To set up an Appwrite server, you can follow the instructions provided in the official Appwrite [documentation](https://appwrite.io/docs/getting-started-for-web). Without a running Appwrite server, the library will not be able to connect to the Appwrite API and you will not be able to use any of its functionality.
 
 Create a next-js project _`npx create-next-app@latest appwrite-web`_, and install the dependencies,
+
 - _`npm i appwrite`_
 
 - _`npm i appwrite-web-react`_
@@ -49,11 +50,11 @@ export default function Home() {
   return (
     <div>
       // mark
-      <SignInEmail 
+      <SignInEmail
         // mark
-        account={account} 
+        account={account}
         // mark
-        theme='light' 
+        theme='light'
         // mark
         routePush='/room'
         // mark
@@ -68,6 +69,7 @@ export default function Home() {
 ```
 
 This component takes in several props,
+
 - _`account`_ object which is used to authenticate the user.
 
 - _`theme`_ prop which allows you to choose between a light or dark theme for the component.
@@ -86,11 +88,11 @@ function reset() {
   return (
     <div>
       // mark
-      <Reset 
+      <Reset
         // mark
-        theme="light" 
+        theme="light"
         // mark
-        account={account} 
+        account={account}
         // mark
         routePush='/room'
         // mark
@@ -130,3 +132,82 @@ export default room
 
 _`useListDocuments`_ is a hook that uses the [swr](https://swr.vercel.app/) library from Next.js to fetch and automatically re-fetch data from a collection in the Appwrite database when it's changes so there is no need to managing the states for data when working with this hook.
 Check out the list of all [function](https://github.com/vasucp1207/appwrite-web-react/tree/master/src/helpers) provided by the library
+
+```tsx room.tsx
+...
+// mark
+let { data: user } = useLogedAccount(account);
+
+<div>
+  {user?.name}
+</div>
+...
+```
+
+_`useLogedAccount`_ is a hook that get you the currently logged in user in the database.
+
+```tsx room.tsx
+...
+// mark
+<button onClick={() => useLogOut(account)}>Log out</button>
+...
+```
+
+_`useLogOut`_ used to log out a user from the current session. It is used to clear the user session data and make sure that the user is redirected to the login screen.
+
+```tsx room.tsx
+...
+// mark
+<button onClick={() => useDelelteDocument(movie, database)}>Delete</button>
+...
+```
+
+_`useDeleteDocument`_ is a hook in the library that can be used to delete a document from a specific collection in the Appwrite database.
+
+```tsx room.tsx
+...
+<input
+  onChange={(e) => setUpdate({ ...updMovie, name: e.target.value })}
+/>
+
+// mark
+<button
+  // mark
+  onClick={() => useUpdateDocument(movie, updMovie, database)}
+  // mark
+>
+  // mark
+  Update
+  // mark
+</button>
+...
+```
+
+_`useUpdateDocument`_ is a hook that enables updating a document in an Appwrite collection.
+
+```tsx room.tsx
+...
+  const [movie, setMovie] = useState({
+    name: "",
+    year: ""
+  });
+
+  function submitMovie() {
+    // mark
+    useCreateDocuments({
+      // mark
+      name: movie.name,
+      // mark
+      year: movie.year
+      // mark
+    },
+      // mark
+      database
+      // mark
+    );
+    setMovie({ ...movie, name: " ", year: " " });
+  }
+...
+```
+
+_`useCreateDocuments`_ is a hook in the library that helps you to create a document in a collection in a database.
