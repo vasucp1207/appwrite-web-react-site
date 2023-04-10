@@ -25,7 +25,11 @@ export default function App() {
       <div className="title">
         <div>
           <div className="description">
-            <span className="pink-text">Appwrite</span> UI library for React
+            <div className="pink-text">Appwrite <span className="black-text">UI library for</span></div>
+            <div>React</div>
+          </div>
+          <div className="gif-cont">
+            <img className="gif" src="/appwrite1.gif" />
           </div>
           <div className="btn-cont">
             <a>

@@ -4,7 +4,7 @@ import Intro from './components/Intro.mdx';
 export default function App() {
   return (
     <div>
-      <div className="navbar">
+      <div onClick={() => window.location.href='/'} className="navbar">
         <div className="top-right">
           <div className="heading">Appwrite Web React</div>
           <img className="appwrite-icon" src="/appwrite.svg" />
