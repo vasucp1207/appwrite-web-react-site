@@ -1,0 +1,132 @@
+# Appwrite Web React
+
+This library makes it easy to add authentication features to your web app with ready-made auth screens and a bunch of helper functions for interacting to your appwrite database.
+
+## Getting started
+
+*Note*: Before using this library, it is necessary to have an Appwrite server instance up and running. The Appwrite server can be set up locally or on a remote server. To set up an Appwrite server, you can follow the instructions provided in the official Appwrite [documentation](https://appwrite.io/docs/getting-started-for-web). Without a running Appwrite server, the library will not be able to connect to the Appwrite API and you will not be able to use any of its functionality.
+
+Create a next-js project _`npx create-next-app@latest appwrite-web`_, and install the dependencies,
+- _`npm i appwrite`_
+
+- _`npm i appwrite-web-react`_
+
+Create a _`utils`_ folder in root of the project and connects out project to appwrite server api's.
+
+```ts utils.ts
+import { useConfig } from "appwrite-web-react";
+
+// mark
+const { client, account, database, storage, avatars } = useConfig({
+  // mark
+  endpoint: 'Your API Endpoint',
+  // mark
+  projectId: 'Your Project ID'
+  // mark
+});
+
+export {
+  client,
+  account,
+  database,
+  storage,
+  avatars
+}
+```
+
+_`useConfig`_ is a React hook provided by the library that connects your web application to the Appwrite server API. By passing in the endpoint and project ID as arguments, it returns an object containing various Appwrite API clients, including client for general API calls, account for account management, database for database operations, storage for file storage, and avatars for avatar management.
+
+## Auth Screens
+
+Auth screens are a set of pre-built components designed to help you quickly set up an authentication flow for your web application using appwrite. They include login, registration, password reset, and oauth providers. Make sure to configure your SMTP details to verifying your account and for reset password funtionality in your auth flow for more details see [here](https://appwrite.io/docs/email-delivery).
+
+```tsx index.tsx
+import { SignInEmail } from 'appwrite-web-react';
+import "react-toastify/dist/ReactToastify.css";
+import { account } from '../../utils/utils';
+
+export default function Home() {
+  return (
+    <div>
+      // mark
+      <SignInEmail 
+        // mark
+        account={account} 
+        // mark
+        theme='light' 
+        // mark
+        routePush='/room'
+        // mark
+        routeSign='http://localhost:3000/'
+        // mark
+        routeRst='http://localhost:3000/reset'
+        // mark
+      />
+    </div>
+  )
+}
+```
+
+This component takes in several props,
+- _`account`_ object which is used to authenticate the user.
+
+- _`theme`_ prop which allows you to choose between a light or dark theme for the component.
+- _`routePush`_ prop which specifies the route that the user should be redirected to upon successful authentication.
+- _`routeSign`_ prop which specifies the absolute route of the _`SignInEmail`_ screen.
+- _`routeRst`_ prop which specifies the absolute route of the _`Reset`_ screen in out project.
+
+Setup the Reset screen,
+
+```tsx reset.tsx
+import React from 'react'
+import { Reset, useConfig } from 'appwrite-web-react';
+import { account } from '../../utils/utils';
+
+function reset() {
+  return (
+    <div>
+      // mark
+      <Reset 
+        // mark
+        theme="light" 
+        // mark
+        account={account} 
+        // mark
+        routePush='/room'
+        // mark
+      />
+    </div>
+  )
+}
+
+export default reset
+```
+
+## Helpers function
+
+The helper functions provided by this library are designed to make it easier to work with Appwrite's APIs in your web application.
+
+```tsx room.tsx
+import { useListDocuments } from 'appwrite-web-react';
+import { client, database } from '../../utils/utils';
+
+function room() {
+  // mark
+  let { data: movies, error } = useListDocuments(client, database);
+  return (
+    <div>
+      {movies?.map((movie) => {
+        <div>
+          <div>{movie.name}</div>
+          <div>{movie.year}</div>
+        </div>
+      })}
+    </div>
+  )
+}
+
+export default room
+```
+
+_`useListDocuments`_ is a hook that uses the [swr](https://swr.vercel.app/) library from Next.js to fetch and automatically re-fetch data from a collection in the Appwrite database when it's changes so there is no need to managing the states for data when working with this hook.
+Check out the list of all [function](https://github.com/vasucp1207/appwrite-web-react/tree/master/src/helpers) provided by the library

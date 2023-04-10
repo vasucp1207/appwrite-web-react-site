@@ -1,0 +1,90 @@
+::selection {
+  background-color: #f02e65;
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 0 0 rgb(203, 213, 222);
+  margin-top: 30px;
+  margin-bottom: 40px;
+  color: #f02e65;
+}
+
+.navbar1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  color: #f02e65;
+}
+
+.top-right {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.appwrite-icon {
+  height: 30px;
+}
+
+.heading {
+  font-size: 30px;
+}
+
+.link-git {
+  color: #f02e65;
+  display: flex;
+}
+
+.footer {
+  color: #f02e65;
+  text-decoration: underline;
+  display: flex;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.btn-cont {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  cursor: pointer;
+  font-size: 20px;
+  width: 240px;
+  height: 48px;
+  border: 2px solid #4b5564;
+  background: transparent;
+  border-radius: 5px;
+}
+
+button:hover {
+  border: 2px solid #f02e65;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+.description {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  width: 583px;
+  text-align: center;
+  font-size: 3.75rem;
+  font-weight: bold;
+}
+
+.pink-text {
+  color: #f02e65;
+}
