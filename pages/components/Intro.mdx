@@ -1,6 +1,6 @@
 # Appwrite Web React
 
-This library makes it easy to add authentication features to your web app with ready-made auth screens and a bunch of helper functions for interacting to your appwrite database.
+This library makes it easy to add authentication features to your web app with ready-made auth screens and a bunch of helper functions for interacting to appwrite server.
 
 ## Getting started
 
@@ -12,7 +12,7 @@ Create a next-js project _`npx create-next-app@latest appwrite-web`_, and instal
 
 - _`npm i appwrite-web-react`_
 
-Create a _`utils`_ folder in root of the project and connects out project to appwrite server api's.
+Create a _`utils`_ folder in root of your project and connects your project to appwrite server api's,
 
 ```ts utils.ts
 import { useConfig } from "appwrite-web-react";
@@ -39,7 +39,7 @@ _`useConfig`_ is a React hook provided by the library that connects your web app
 
 ## Auth Screens
 
-Auth screens are a set of pre-built components designed to help you quickly set up an authentication flow for your web application using appwrite. They include login, registration, password reset, and oauth providers. Make sure to configure your SMTP details to verifying your account and for reset password funtionality in your auth flow for more details see [here](https://appwrite.io/docs/email-delivery).
+Auth screens are a set of pre-built components designed to help you quickly set up an authentication flow for your web application using appwrite. They include login, registration, password reset, and oauth providers. Make sure to configure your SMTP details to verifying your account and for reset password funtionality for more details see [here](https://appwrite.io/docs/email-delivery).
 
 ```tsx index.tsx
 import { SignInEmail } from 'appwrite-web-react';
@@ -77,7 +77,31 @@ This component takes in several props,
 - _`routeSign`_ prop which specifies the absolute route of the _`SignInEmail`_ screen.
 - _`routeRst`_ prop which specifies the absolute route of the _`Reset`_ screen in out project.
 
-Setup the Reset screen,
+You can also use OAuth2 providers to sign in, each OAuth2 provider should be enabled from the Appwrite console first.
+
+```tsx index.tsx
+import { SignInOauth } from 'appwrite-web-react';
+import "react-toastify/dist/ReactToastify.css";
+import { account } from '../../utils/utils';
+
+export default function Home() {
+  return (
+    <div>
+      // mark
+      <SignInOauth
+        // mark
+        account={account}
+        // mark
+        theme='light'
+        // mark
+        routePush='/room'
+      />
+    </div>
+  )
+}
+```
+
+Setup the Reset password functionality,
 
 ```tsx reset.tsx
 import React from 'react'
@@ -131,7 +155,6 @@ export default room
 ```
 
 _`useListDocuments`_ is a hook that uses the [swr](https://swr.vercel.app/) library from Next.js to fetch and automatically re-fetch data from a collection in the Appwrite database when it's changes so there is no need to managing the states for data when working with this hook.
-Check out the list of all [function](https://github.com/vasucp1207/appwrite-web-react/tree/master/src/helpers) provided by the library
 
 ```tsx room.tsx
 ...
